@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/layout/home_layout.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/moduls/login/login_screen.dart';
+import 'package:todo_app/settings_provider.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -19,16 +21,23 @@ class _SplashViewState extends State<SplashView> {
         const Duration(
           seconds: 2,
         ), () {
-      Navigator.of(context).pushReplacementNamed(HomeLayout.routeName);
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Image.asset("assets/images/splash.jpg"),
+    var provider = Provider.of<SettingProvider>(context);
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(!provider.isDark()
+              ? "assets/images/splash.jpg"
+              : "assets/images/splash_dark.jpg"),
+          fit: BoxFit.fill,
+        ),
+      ),
     );
   }
 }
